@@ -41,14 +41,50 @@ class Program
         var book19 = new Book("The Iliad");
         var book20 = new Book("Anna Karenina");
 
-        // library.AddBook(book1); 
-        // Console.WriteLine(book1);
 
+        // Adding users and books to the library
+        library.AddUser(user1);
+        library.AddUser(user2);
+        library.AddUser(user3);
+        library.AddUser(user4);
+        library.AddUser(user5);
+        library.AddUser(user6);
+        // Adding users up to user10...
+        library.AddBook(book1);
+        library.AddBook(book2);
+        library.AddBook(book3);
+        library.AddBook(book4);
+        library.AddBook(book5);
+        // Adding books up to book20...
+
+        // Example usage
         var books = library.GetAllBooks(page: 1, pageSize: 5);
         foreach (var book in books)
         {
             Console.WriteLine($"Book: {book.Name}, Created Date: {book.CreatedDate}");
         }
+
+        var users = library.GetAllUsers(page: 1, pageSize: 5);
+        foreach (var user in users)
+        {
+            Console.WriteLine($"User: {user.Name}, Created Date: {user.CreatedDate}");
+        }
+
+        var foundBooks = library.FindBooksByTitle("1984");
+        foreach (var book in foundBooks)
+        {
+            Console.WriteLine($"Found Book: {book.Name}, Created Date: {book.CreatedDate}");
+        }
+
+        var foundUsers = library.FindUsersByName("Alice");
+        foreach (var user in foundUsers)
+        {
+            Console.WriteLine($"Found User: {user.Name}, Created Date: {user.CreatedDate}");
+        }
+
+        // Deleting a book and a user
+        library.DeleteBook(book1.Id);
+        library.DeleteUser(user1.Id);
     }
 
 }
