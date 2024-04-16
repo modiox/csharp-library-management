@@ -106,14 +106,33 @@ class Program
            else {
              Console.WriteLine("User Not found..");
            }
-           
-            
-            
-        
 
-        // Deleting a book and a user
+
+        // Deleting a book and a user & write messages on the console accordingly
         library.DeleteBook(book1.Id);
         library.DeleteUser(user1.Id);
+        var deletedBook = library.GetAllBooks(page: 1, pageSize: int.MaxValue).FirstOrDefault(b => b.Id == book1.Id);
+        if (deletedBook == null)
+        {
+            Console.WriteLine($"Book with ID {book1.Id} is deleted.");
+        }
+        else
+        {
+            Console.WriteLine($"Book with ID {book1.Id} is still present.");
+        }
+
+        var deletedUser = library.GetAllUsers(page: 1, pageSize: int.MaxValue).FirstOrDefault(u => u.Id == user1.Id);
+        if (deletedUser == null)
+        {
+            Console.WriteLine($"User with ID {user1.Id} is deleted.");
+        }
+        else
+        {
+            Console.WriteLine($"User with ID {user1.Id} is still present.");
+        }
+
+        // Other operations...
     }
 
-}
+} 
+
