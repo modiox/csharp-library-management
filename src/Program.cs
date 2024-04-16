@@ -49,38 +49,67 @@ class Program
         library.AddUser(user4);
         library.AddUser(user5);
         library.AddUser(user6);
+        library.AddUser(user7);
+        library.AddUser(user8);
+        library.AddUser(user9);
+        library.AddUser(user10);
         // Adding users up to user10...
         library.AddBook(book1);
         library.AddBook(book2);
         library.AddBook(book3);
         library.AddBook(book4);
         library.AddBook(book5);
+        library.AddBook(book6);
+        library.AddBook(book7);
+        library.AddBook(book8);
+        library.AddBook(book9);
+        library.AddBook(book10);
         // Adding books up to book20...
 
         // Example usage
-        var books = library.GetAllBooks(page: 1, pageSize: 5);
+        var books = library.GetAllBooks(page: 1, pageSize: 10);
         foreach (var book in books)
         {
             Console.WriteLine($"Book: {book.Name}, Created Date: {book.CreatedDate}");
         }
 
-        var users = library.GetAllUsers(page: 1, pageSize: 5);
+        var users = library.GetAllUsers(page: 1, pageSize: 10);
         foreach (var user in users)
         {
             Console.WriteLine($"User: {user.Name}, Created Date: {user.CreatedDate}");
         }
 
-        var foundBooks = library.FindBooksByTitle("1984");
-        foreach (var book in foundBooks)
-        {
-            Console.WriteLine($"Found Book: {book.Name}, Created Date: {book.CreatedDate}");
-        }
 
-        var foundUsers = library.FindUsersByName("Alice");
-        foreach (var user in foundUsers)
-        {
-            Console.WriteLine($"Found User: {user.Name}, Created Date: {user.CreatedDate}");
+        var foundBooks = library.FindBooksByTitle("1984");
+        if (foundBooks != null && foundBooks.Any()) {
+            foreach (var book in foundBooks) {  
+                Console.WriteLine($"Found Book: {book.Name}, Created Date: {book.CreatedDate}");
+            }
+
         }
+            else {
+                 Console.WriteLine("Book not found..");
+            }
+            
+            
+
+        var foundUsers = library.FindUsersByName("Moe");
+
+        if (foundUsers != null && foundUsers.Any())
+        {
+            foreach (var user in foundUsers)
+        {
+          
+            Console.WriteLine($"Found User: {user.Name}, Created Date: {user.CreatedDate}");
+        }} 
+
+           else {
+             Console.WriteLine("User Not found..");
+           }
+           
+            
+            
+        
 
         // Deleting a book and a user
         library.DeleteBook(book1.Id);
