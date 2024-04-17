@@ -1,4 +1,4 @@
-﻿
+﻿namespace LibraryApp;
 public class LibraryItem {
 
     public Guid Id { get; }
@@ -30,33 +30,38 @@ public class Library {
     //create the objects for book and user
     private List<Book> books; 
     private List<User> users; 
-    public Library(){ 
+    private INotificationService notificationService;
+    public Library(INotificationService notificationService)
+    { 
         books = new List<Book>();
         users = new List<User>();
+        this.notificationService = notificationService;
     }
 
     //Methods to add the books and users
     public void AddBook(Book book)
     {
         books.Add(book);
+        notificationService.SendNotificationOnSuccess($"Book {book.Name} was added"); //inject the msg 
     }
     public void AddUser(User user)
     {
         users.Add(user);
+        notificationService.SendNotificationOnSuccess($"User '{user.Name}' was added");
     }
 
-    public IEnumerable<Book> GetAllBooks(int page, int pageSize)
+    public IEnumerable<Book> GetAllBooks(int page, int limit)
     {
         return books.OrderByDescending(b => b.CreatedDate)
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize);
+                    .Skip((page - 1) * limit)
+                    .Take(limit);
     }
 
-    public IEnumerable<User> GetAllUsers(int page, int pageSize)
+    public IEnumerable<User> GetAllUsers(int page, int limit)
     {
         return users.OrderByDescending(u => u.CreatedDate)
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize);
+                    .Skip((page - 1) * limit)
+                    .Take(limit);
     }
 
     public IEnumerable<Book> FindBooksByTitle(string title)

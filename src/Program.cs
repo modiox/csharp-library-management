@@ -1,8 +1,17 @@
+
+namespace LibraryApp;
+
 class Program
 {
     static void Main(string[] args)
     {
-        var library = new Library();
+
+
+        var emailService = new EmailNotificationService();
+        var smsService = new SMSNotificationService();
+
+        var library = new Library(emailService);
+        var libraryWithSMS = new Library(smsService);
 
 
         // Creating users up to user10...
@@ -67,13 +76,13 @@ class Program
         // Adding books up to book20...
 
         // Example usage
-        var books = library.GetAllBooks(page: 1, pageSize: 10);
+        var books = library.GetAllBooks(page: 1, limit: 10);
         foreach (var book in books)
         {
             Console.WriteLine($"Book: {book.Name}, Created Date: {book.CreatedDate}");
         }
 
-        var users = library.GetAllUsers(page: 1, pageSize: 10);
+        var users = library.GetAllUsers(page: 1, limit: 10);
         foreach (var user in users)
         {
             Console.WriteLine($"User: {user.Name}, Created Date: {user.CreatedDate}");
@@ -111,7 +120,7 @@ class Program
         // Deleting a book and a user & write messages on the console accordingly
         library.DeleteBook(book1.Id);
         library.DeleteUser(user1.Id);
-        var deletedBook = library.GetAllBooks(page: 1, pageSize: int.MaxValue).FirstOrDefault(b => b.Id == book1.Id);
+        var deletedBook = library.GetAllBooks(page: 1, limit: int.MaxValue).FirstOrDefault(b => b.Id == book1.Id);
         if (deletedBook == null)
         {
             Console.WriteLine($"Book with ID {book1.Id} is deleted.");
@@ -121,7 +130,7 @@ class Program
             Console.WriteLine($"Book with ID {book1.Id} is still present.");
         }
 
-        var deletedUser = library.GetAllUsers(page: 1, pageSize: int.MaxValue).FirstOrDefault(u => u.Id == user1.Id);
+        var deletedUser = library.GetAllUsers(page: 1, limit: int.MaxValue).FirstOrDefault(u => u.Id == user1.Id);
         if (deletedUser == null)
         {
             Console.WriteLine($"User with ID {user1.Id} is deleted.");
@@ -131,7 +140,6 @@ class Program
             Console.WriteLine($"User with ID {user1.Id} is still present.");
         }
 
-        // Other operations...
     }
 
 } 
