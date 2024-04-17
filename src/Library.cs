@@ -41,13 +41,23 @@ public class Library {
     //Methods to add the books and users
     public void AddBook(Book book)
     {
+        bool exists = books.Any((i) => i.Name == book.Name);
+        if (exists) {
+             notificationService.SendNotificationOnFailure($"Book {book.Name} already exists. Please email support@library.com");
+        }
         books.Add(book);
-        notificationService.SendNotificationOnSuccess($"Book {book.Name} was added"); //inject the msg 
+        notificationService.SendNotificationOnSuccess($"Book {book.Name} was added. Thank you!"); //inject the msg 
+       
     }
     public void AddUser(User user)
     {
+        bool exists = users.Any((i) => i.Name == user.Name);
+        if(exists){
+             notificationService.SendNotificationOnFailure($"User {user.Name} already exists. Please email support@library.com");
+        }
         users.Add(user);
-        notificationService.SendNotificationOnSuccess($"User '{user.Name}' was added");
+        notificationService.SendNotificationOnSuccess($"User {user.Name} was added. Thank you!");
+       
     }
 
     public IEnumerable<Book> GetAllBooks(int page, int limit)
@@ -76,12 +86,33 @@ public class Library {
 
     public void DeleteBook(Guid id)
     {
-        books.RemoveAll(b => b.Id == id);
+        var deleteBook= books.Find(b => b.Id == id);
+        if (deleteBook != null)
+        { 
+            books.Remove(deleteBook); 
+            notificationService.SendNotificationOnSuccess($"{deleteBook.Name} is deleted");
+        }
+        else {
+            notificationService.SendNotificationOnFailure($"Book with {id} was not found");
+        }
+           
     }
 
     public void DeleteUser(Guid id)
     {
-        users.RemoveAll(u => u.Id == id);
+        var deleteUser = users.Find(u => u.Id == id);
+        if(deleteUser != null) 
+        {
+            users.Remove(deleteUser);
+            notificationService.SendNotificationOnSuccess($"{deleteUser.Name} is deleted");
+        
+        }
+        else
+        {
+            notificationService.SendNotificationOnFailure($"User with {id} was not found");
+        }
+
+
     }
 
 }
