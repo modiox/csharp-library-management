@@ -12,6 +12,7 @@ class Program
 
         var library = new Library(emailService);
         var libraryWithSMS = new Library(smsService);
+    
 
 
         // Creating users up to user10...
@@ -73,7 +74,15 @@ class Program
         library.AddBook(book8);
         library.AddBook(book9);
         library.AddBook(book10);
-        // Adding books up to book20...
+        // Adding books up to book10...
+
+       
+
+        libraryWithSMS.AddBook(book1);
+        libraryWithSMS.AddBook(book5);
+        libraryWithSMS.AddUser(user1);
+        libraryWithSMS.AddUser(user5);
+
 
         // Example usage
         var books = library.GetAllBooks(page: 1, limit: 10);
