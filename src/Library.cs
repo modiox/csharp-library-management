@@ -25,9 +25,6 @@ public class Book : LibraryItem {
 
 public class Library {
 
-    //List the books
-    //List the users
-    //create the objects for book and user
     private List<Book> books; 
     private List<User> users; 
     private INotificationService notificationService;

@@ -84,7 +84,6 @@ class Program
         libraryWithSMS.AddUser(user5);
 
 
-        // Example usage
         var books = library.GetAllBooks(page: 1, limit: 10);
         foreach (var book in books)
         {
